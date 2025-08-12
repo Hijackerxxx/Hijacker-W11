@@ -38,3 +38,46 @@ url("about:newtab") {
  }
     
 
+
+/* 普通新标签页搜索框图标隐藏 */
+@-moz-document url("about:home"), url("about:newtab") {
+  /* 隐藏搜索框左侧的搜索引擎图标 */
+  .search-wrapper .search-handoff-button {
+    background-image: none !important;
+    padding-inline-start: 16px !important; /* 减少左内边距，因为没有图标了 */
+  }
+  
+  /* 或者完全移除背景相关设置 */
+  .search-wrapper .search-handoff-button,
+  .search-wrapper input {
+    background-size: 0 !important;
+    background-image: none !important;
+  }
+  
+  /* 调整光标位置，因为没有图标了 */
+  .search-wrapper .search-handoff-button .fake-caret {
+    inset-inline-start: 16px !important; /* 原来是 48px */
+  }
+}
+
+/* 私人浏览搜索框图标隐藏 */
+@-moz-document url("about:privatebrowsing") {
+  #search-handoff-button {
+    background-image: none !important;
+    background-size: 0 !important;
+  }
+}
+
+/* Firefox View 搜索框图标隐藏 */
+@-moz-document url-prefix(about:firefoxview) {
+  .search-container input {
+    background-image: none !important;
+  }
+}
+
+/* 全局搜索图标隐藏（如果上面的方法不够彻底） */
+body {
+  --newtab-search-icon: none !important;
+}
+
+
