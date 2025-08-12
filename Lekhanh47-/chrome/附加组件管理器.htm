@@ -1,0 +1,1391 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this file,
+   - You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title data-l10n-id="addons-page-title">附加组件管理器</title>
+
+    <!-- Bug 1571346 Remove 'unsafe-inline' from style-src within about:addons -->
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; style-src chrome: 'unsafe-inline'; img-src chrome: blob: file: jar: https: http:; connect-src chrome: data: https: http:; object-src 'none'">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/common.css">
+    <link rel="stylesheet" href="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/aboutaddons.css">
+    <link rel="stylesheet" href="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/shortcuts.css">
+
+    <link rel="shortcut icon" href="chrome://mozapps/skin/extensions/extension.svg">
+    <link href="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/addon-mlmodel-details.css" rel="stylesheet">
+
+    <link rel="localization" href="branding/brand.ftl">
+    <link rel="localization" href="toolkit/about/aboutAddons.ftl">
+    <link rel="localization" href="toolkit/global/extensionPermissions.ftl">
+
+    <!-- Defer scripts so all the templates are loaded by the time they run. -->
+    <script defer="defer" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/aboutaddonsCommon.js"></script>
+    <script defer="defer" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/abuse-reports.js"></script>
+    <script defer="defer" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/shortcuts.js"></script>
+    <script defer="defer" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/drag-drop-addon-installer.js"></script>
+    <script defer="defer" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/view-controller.js"></script>
+    <script defer="defer" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/aboutaddons.js"></script>
+    <script src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/addon-mlmodel-details.mjs" type="module"></script>
+    <script src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/mlmodel-list-intro.mjs" type="module"></script>
+    <script type="module" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/mlmodel-card-header-additions.mjs"></script>
+    <script type="module" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/mlmodel-card-list-additions.mjs"></script>
+    <script type="module" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/moz-message-bar.mjs"></script>
+    <script type="module" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/moz-toggle.mjs"></script>
+    <script type="module" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/moz-support-link.mjs"></script>
+    <script type="module" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/moz-five-star.mjs"></script>
+  <link rel="localization" href="toolkit/global/mozMessageBar.ftl"><link rel="localization" href="toolkit/global/mozSupportLink.ftl"><link rel="localization" href="toolkit/global/mozFiveStar.ftl"></head>
+  <body>
+    <drag-drop-addon-installer></drag-drop-addon-installer>
+    <div id="full">
+      <div id="sidebar">
+        <categories-box id="categories" orientation="vertical" aria-orientation="vertical" role="tablist">
+          <button is="discover-button" viewid="addons://discover/" class="category" role="tab" name="discover" aria-selected="false" data-l10n-id="addon-category-discover-title" tabindex="-1" title="推荐"><span class="category-name" data-l10n-id="addon-category-discover">推荐</span></button>
+          <button is="category-button" viewid="addons://list/extension" class="category" role="tab" name="extension" aria-selected="true" data-l10n-id="addon-category-extension-title" tabindex="0" title="扩展" selected=""><span class="category-name" data-l10n-id="addon-category-extension">扩展</span></button>
+          <button is="category-button" viewid="addons://list/theme" class="category" role="tab" name="theme" aria-selected="false" data-l10n-id="addon-category-theme-title" tabindex="-1" title="主题"><span class="category-name" data-l10n-id="addon-category-theme">主题</span></button>
+          <button is="category-button" viewid="addons://list/plugin" class="category" role="tab" name="plugin" aria-selected="false" data-l10n-id="addon-category-plugin-title" tabindex="-1" title="插件"><span class="category-name" data-l10n-id="addon-category-plugin">插件</span></button>
+          <button is="category-button" viewid="addons://list/dictionary" class="category" role="tab" name="dictionary" hidden="" default-hidden="" aria-selected="false" data-l10n-id="addon-category-dictionary-title" tabindex="-1" title="字典"><span class="category-name" data-l10n-id="addon-category-dictionary">字典</span></button>
+          <button is="category-button" viewid="addons://list/locale" class="category" role="tab" name="locale" default-hidden="" aria-selected="false" data-l10n-id="addon-category-locale-title" tabindex="-1" title="语言"><span class="category-name" data-l10n-id="addon-category-locale">语言</span></button>
+          <button is="category-button" viewid="addons://list/sitepermission" class="category" role="tab" name="sitepermission" hidden="" default-hidden="" aria-selected="false" data-l10n-id="addon-category-sitepermission-title" tabindex="-1" title="网站权限"><span class="category-name" data-l10n-id="addon-category-sitepermission">网站权限</span></button>
+          <button is="category-button" viewid="addons://list/mlmodel" class="category" role="tab" name="mlmodel" hidden="" default-hidden="" aria-selected="false" data-l10n-id="addon-category-mlmodel-title" tabindex="-1" title="端侧 AI"><span class="category-name" data-l10n-id="addon-category-mlmodel">端侧 AI</span></button>
+          <button is="category-button" viewid="addons://updates/available" class="category" role="tab" name="available-updates" hidden="" default-hidden="" aria-selected="false" data-l10n-id="addon-category-available-updates-title" tabindex="-1" title="可用更新"><span class="category-name" data-l10n-id="addon-category-available-updates">可用更新</span></button>
+          <button is="category-button" viewid="addons://updates/recent" class="category" role="tab" name="recent-updates" hidden="" default-hidden="" aria-selected="false" data-l10n-id="addon-category-recent-updates-title" tabindex="-1" title="最近更新"><span class="category-name" data-l10n-id="addon-category-recent-updates">最近更新</span></button>
+        </categories-box>
+        <div class="spacer"></div>
+        <sidebar-footer><ul class="sidebar-footer-list"><li><a href="about:preferences" id="preferencesButton" class="sidebar-footer-link" data-l10n-id="sidebar-settings-button-title" title="Firefox 设置"><img src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/settings.svg" class="sidebar-footer-icon"><span class="sidebar-footer-label" data-l10n-id="addons-settings-button">Firefox 设置</span></a></li><li><a is="moz-support-link" support-page="addons-help" id="help-button" class="sidebar-footer-link" data-l10n-id="sidebar-help-button-title" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/addons-help" target="_blank" title="附加组件帮助"><img src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/help.svg" class="sidebar-footer-icon"><span class="sidebar-footer-label" data-l10n-id="help-button">附加组件帮助</span></a></li></ul></sidebar-footer>
+      </div>
+      <div id="content">
+        <addon-page-header id="page-header" page-options-id="page-options" current-view="list" current-param="extension" type="extension">
+      <div class="sticky-container">
+        <div class="main-search">
+          <label for="search-addons" class="search-label" data-l10n-id="default-heading-search-label">寻找更多附加组件</label>
+          <search-addons><moz-input-search maxlength="100" data-l10n-attrs="label,description,accesskey,placeholder" iconsrc="" data-l10n-id="addons-heading-search-input" inputlayout="block" placeholder="搜索 addons.mozilla.org"></moz-input-search><moz-button type="ghost" iconsrc="chrome://global/skin/icons/search-textbox.svg" data-l10n-id="addons-heading-search-button" data-l10n-attrs="label,tooltiptext" size="default"></moz-button></search-addons>
+        </div>
+        <div class="main-heading">
+          <button class="back-button" action="go-back" data-l10n-id="header-back-button" hidden="" title="返回" disabled="disabled"></button>
+          <h1 class="header-name" data-l10n-id="extension-heading">管理您的扩展</h1>
+          <div class="spacer"></div>
+          <addon-updates-message id="updates-message" hidden=""></addon-updates-message>
+          <div class="page-options-menu">
+            <button class="more-options-button" action="page-options" aria-haspopup="menu" aria-expanded="false" data-l10n-id="addon-page-options-button" title="用于所有附加组件的工具"></button>
+          </div>
+        </div>
+      </div>
+      <global-warnings></global-warnings>
+    </addon-page-header>
+        <addon-page-options id="page-options">
+      <panel-list role="menu">
+        <panel-item action="check-for-updates" data-l10n-id="addon-updates-check-for-updates" data-l10n-attrs="accesskey" role="presentation" accesskey="">检查更新</panel-item>
+        <panel-item action="view-recent-updates" data-l10n-id="addon-updates-view-updates" data-l10n-attrs="accesskey" role="presentation" accesskey="">查看最近更新</panel-item>
+        <hr>
+        <panel-item action="install-from-file" data-l10n-id="addon-install-from-file" data-l10n-attrs="accesskey" role="presentation" accesskey="">从文件安装附加组件…</panel-item>
+        <panel-item action="debug-addons" data-l10n-id="addon-open-about-debugging" data-l10n-attrs="accesskey" role="presentation" accesskey="">调试附加组件</panel-item>
+        <hr>
+        <panel-item action="set-update-automatically" data-l10n-id="addon-updates-update-addons-automatically" data-l10n-attrs="accesskey" type="checkbox" role="presentation" checked="" accesskey="">自动更新附加组件</panel-item>
+        <panel-item action="reset-update-states" data-l10n-attrs="accesskey" role="presentation" data-l10n-id="addon-updates-reset-updates-to-automatic" accesskey="">重设所有附加组件为自动更新</panel-item>
+        <hr>
+        <panel-item action="manage-shortcuts" data-l10n-id="addon-manage-extensions-shortcuts" data-l10n-attrs="accesskey" role="presentation" accesskey="">管理扩展快捷键</panel-item>
+      </panel-list>
+    </addon-page-options>
+
+        <div id="main" current-view="list"><addon-list type="extension"><message-bar-stack class="pending-uninstall" reverse=""></message-bar-stack><section section="0" class="extension-enabled-section"><h2 class="list-section-heading" data-l10n-id="extension-enabled-heading">已启用</h2><addon-card addon-id="{aecec67f-0d10-4fa7-b7c7-609a2db280cf}"><div class="card addon" aria-labelledby="_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/icon48.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-heading"><a class="addon-name-link" href="addons://detail/%7Baecec67f-0d10-4fa7-b7c7-609a2db280cf%7D" title="暴力猴 2.31.0">暴力猴</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">一个开源的用户脚本管理器，支持很多浏览器</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{0b457cAA-602d-484a-8fe7-c1d894a011ba}"><div class="card addon" aria-labelledby="_0b457caa-602d-484a-8fe7-c1d894a011ba_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/sss_48.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_0b457caa-602d-484a-8fe7-c1d894a011ba_-heading"><a class="addon-name-link" href="addons://detail/%7B0b457cAA-602d-484a-8fe7-c1d894a011ba%7D" title="捕捉网页截图 - FireShot的 1.12.18">捕捉网页截图 - FireShot的</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">捕捉网页截图，编辑并将它们保存为PDF，JPEG，GIF，PNG或BMP；上传，打印，在Photoshop中打开，复制到剪贴板或电子邮件</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{5efceaa7-f3a2-4e59-a54b-85319448e305}"><div class="card addon" aria-labelledby="_5efceaa7-f3a2-4e59-a54b-85319448e305_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/48_004.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_5efceaa7-f3a2-4e59-a54b-85319448e305_-heading"><a class="addon-name-link" href="addons://detail/%7B5efceaa7-f3a2-4e59-a54b-85319448e305%7D" title="沉浸式翻译 - 网页翻译插件 | PDF翻译 | 免费 1.18.1">沉浸式翻译 - 网页翻译插件 | PDF翻译 | 免费</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">【沉浸式翻译】免费的（原文/
+译文）双语对照网页翻译插件，支持PDF翻译（保留排版），视频双语字幕翻译（Youtube, 
+Netflix），EPUB电子书翻译；支持人工智能AI翻译大模型（OpenAI (ChatGPT)、DeepL、Gemini(Bard) 等）</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{94b6d6fe-0151-41f5-866c-9389d1f8e1e7}"><div class="card addon" aria-labelledby="_94b6d6fe-0151-41f5-866c-9389d1f8e1e7_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/2764885-64.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_94b6d6fe-0151-41f5-866c-9389d1f8e1e7_-heading"><a class="addon-name-link" href="addons://detail/%7B94b6d6fe-0151-41f5-866c-9389d1f8e1e7%7D" title="浏览器盒子-允许复制 4.1">浏览器盒子-允许复制</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">集合工具：手动去除弹窗、选中自动复制、自动清除部分广告、解除网页禁止复制</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" hidden="" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{e58d3966-3d76-4cd9-8552-1582fbc800c1}"><div class="card addon" aria-labelledby="_e58d3966-3d76-4cd9-8552-1582fbc800c1_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/icon-38.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_e58d3966-3d76-4cd9-8552-1582fbc800c1_-heading"><a class="addon-name-link" href="addons://detail/%7Be58d3966-3d76-4cd9-8552-1582fbc800c1%7D" title="Buster: Captcha Solver for Humans 3.1.0">Buster: Captcha Solver for Humans</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">Save time by asking Buster to solve CAPTCHAs for you.</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{74145f27-f039-47ce-a470-a662b129930a}"><div class="card addon" aria-labelledby="_74145f27-f039-47ce-a470-a662b129930a_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/clearurls_38x38.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_74145f27-f039-47ce-a470-a662b129930a_-heading"><a class="addon-name-link" href="addons://detail/%7B74145f27-f039-47ce-a470-a662b129930a%7D" title="ClearURLs 1.27.3">ClearURLs</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">从 URL 中移除跟踪元素。</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{c0c63e02-d8b5-4b8d-accf-d29e3735f58a}"><div class="card addon" aria-labelledby="_c0c63e02-d8b5-4b8d-accf-d29e3735f58a_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/link_copy.svg">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_c0c63e02-d8b5-4b8d-accf-d29e3735f58a_-heading"><a class="addon-name-link" href="addons://detail/%7Bc0c63e02-d8b5-4b8d-accf-d29e3735f58a%7D" title="Copy URL 1.0">Copy URL</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">Copy the current page url to the clipboard</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" hidden="" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{a250ed19-05b9-4486-b2c3-535044766b8c}"><div class="card addon" aria-labelledby="_a250ed19-05b9-4486-b2c3-535044766b8c_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/icon-48.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_a250ed19-05b9-4486-b2c3-535044766b8c_-heading"><a class="addon-name-link" href="addons://detail/%7Ba250ed19-05b9-4486-b2c3-535044766b8c%7D" title="hide-scrollbars 4.0.2">hide-scrollbars</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">Hides page scrollbars!</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" hidden="" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="idcac-pub@guus.ninja"><div class="card addon" aria-labelledby="idcac-pub_guus_ninja-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/48_003.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="idcac-pub_guus_ninja-heading"><a class="addon-name-link" href="addons://detail/idcac-pub@guus.ninja" title="I still don't care about cookies 1.1.4">I still don't care about cookies</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">Community version of the popular extension "I don't care about cookies"
+
+https://github.com/OhMyGuus/I-Dont-Care-About-Cookies</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{d7ce25e4-e6a8-433e-bb29-ec763dcd26bf}"><div class="card addon" aria-labelledby="_d7ce25e4-e6a8-433e-bb29-ec763dcd26bf_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/brt-logo48.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_d7ce25e4-e6a8-433e-bb29-ec763dcd26bf_-heading"><a class="addon-name-link" href="addons://detail/%7Bd7ce25e4-e6a8-433e-bb29-ec763dcd26bf%7D" title="I'm not robot captcha clicker 1.3.1">I'm not robot captcha clicker</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">I'm not robot captcha clicker</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{b9394632-3280-43b4-bad7-e1b6f64ee68e}"><div class="card addon" aria-labelledby="_b9394632-3280-43b4-bad7-e1b6f64ee68e_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/994659-64.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_b9394632-3280-43b4-bad7-e1b6f64ee68e_-heading"><a class="addon-name-link" href="addons://detail/%7Bb9394632-3280-43b4-bad7-e1b6f64ee68e%7D" title="Linkify Plus Plus 12.0.1">Linkify Plus Plus</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">Based on Linkify Plus. Turn plain text URLs into links.</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="simple-translate@sienori"><div class="card addon" aria-labelledby="simple-translate_sienori-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/48.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="simple-translate_sienori-heading"><a class="addon-name-link" href="addons://detail/simple-translate@sienori" title="Simple Translate 3.0.0">Simple Translate</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">在网页上快速翻译选定或输入的文本。支持 Google 翻译和DeepL API。</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="song-id@losnappas"><div class="card addon" aria-labelledby="song-id_losnappas-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/icon.svg">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="song-id_losnappas-heading"><a class="addon-name-link" href="addons://detail/song-id@losnappas" title="Song id 3.5">Song id</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">Music recognition. Like shazam or soundhound.</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}"><div class="card addon" aria-labelledby="_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/48_002.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-heading"><a class="addon-name-link" href="addons://detail/%7B7a7a4a92-a2a0-41d1-9fd7-1e92480d612d%7D" title="Stylus 2.3.14">Stylus</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">Stylus 是一个调整网页外观的用户样式管理器。它可以让您轻松为许多热门网站安装主题和皮肤。</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="{25fce1f7-7e05-43a2-829f-600293bc1b26}"><div class="card addon" aria-labelledby="_25fce1f7-7e05-43a2-829f-600293bc1b26_-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/openinnewtab_48.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="_25fce1f7-7e05-43a2-829f-600293bc1b26_-heading"><a class="addon-name-link" href="addons://detail/%7B25fce1f7-7e05-43a2-829f-600293bc1b26%7D" title="Tap To Tab 0.5.3">Tap To Tab</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">在任何链接上双击（或用手指点击两次）以将其打开到新标签页中。专为平板电脑和笔记本电脑触控板而设计，它们的鼠标上没有两个按钮。</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card><addon-card addon-id="uBlock0@raymondhill.net"><div class="card addon" aria-labelledby="ublock0_raymondhill_net-heading" active="true">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/ublock.svg">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="ublock0_raymondhill_net-heading"><a class="addon-name-link" href="addons://detail/uBlock0@raymondhill.net" title="uBlock Origin 1.65.0">uBlock Origin</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline" pressed=""></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">一款高效的网络请求过滤工具，占用极低的内存和 CPU。</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card></section><section section="1" class="extension-disabled-section"><h2 class="list-section-heading" data-l10n-id="extension-disabled-heading">已禁用</h2><addon-card addon-id="mozilla_cc3@internetdownloadmanager.com"><div class="card addon" aria-labelledby="mozilla_cc3_internetdownloadmanager_com-heading" active="false">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/logo48.png">
+          <div class="card-contents">
+            <div class="addon-name-container"><h3 class="addon-name" id="mozilla_cc3_internetdownloadmanager_com-heading"><a class="addon-name-link" href="addons://detail/mozilla_cc3@internetdownloadmanager.com" data-l10n-args="{&quot;name&quot;:&quot;IDM Integration Module&quot;}" data-l10n-id="addon-name-disabled">IDM Integration Module（已禁用）</a></h3>
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="Firefox 只推荐符合安全和性能标准的扩展。" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="由 Mozilla 构建的官方扩展，符合安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/add-on-badges?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=promoted-addon-badge" title="此扩展已通过审核，符合我们的安全和性能标准" target="_blank">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" hidden="" href="https://support.mozilla.org/1/firefox/141.0.3/WINNT/zh-CN/extensions-pb" title="允许运行于隐私窗口" target="_blank">
+              </a>
+              <div class="spacer"></div>
+              
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" data-l10n-attrs="label,description,accesskey,placeholder" inputlayout="inline"></moz-toggle>
+              <mlmodel-card-header-additions><!----></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false" aria-label="更多选项"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">Download files with Internet Download Manager</span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      <addon-options>
+      <panel-list role="menu">
+        <panel-item data-l10n-id="remove-addon-button" action="remove" role="presentation">移除</panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged="" hidden="" role="presentation">更新</panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences" hidden="" role="presentation">选项</panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report" role="presentation">举报</panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand" role="presentation">管理</panel-item>
+      </panel-list>
+    </addon-options></div></addon-card></section><p id="empty-addons-message" data-l10n-args="{&quot;domain&quot;:&quot;addons.mozilla.org&quot;}" data-l10n-id="list-empty-get-extensions-message">到 <a href="https://addons.mozilla.org/zh-CN/firefox/" target="_blank" data-l10n-name="get-extensions">addons.mozilla.org</a> 安装扩展和主题。</p></addon-list><recommended-extensions-section>
+      <h2 data-l10n-id="recommended-extensions-heading" class="header-name recommended-heading">推荐扩展</h2>
+      <taar-notice hidden=""></taar-notice>
+      <recommended-addon-list type="extension" hide-installed=""><recommended-addon-card><div class="card addon">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/855413-64.png">
+          <div class="card-contents">
+            <div class="addon-name-container">
+      <div class="disco-card-head">
+        <h3 class="disco-addon-name">Dark Reader</h3>
+        <span class="disco-addon-author" data-l10n-args="{&quot;author&quot;:&quot;Dark Reader Ltd&quot;}" data-l10n-id="created-by-author">作者：<a data-l10n-name="author" target="_blank" href="https://addons.mozilla.org/zh-CN/firefox/addon/darkreader/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=discopane-entry-link">Dark Reader Ltd</a></span>
+      </div>
+      <button class="disco-cta-button" action="install-addon" data-l10n-id="install-extension-button">添加至 Firefox</button>
+      <button class="disco-cta-button" data-l10n-id="manage-addon-button" action="manage-addon" hidden="">管理</button>
+    </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">
+      <div>
+        <span class="disco-description-main">启用夜间模式以获得更好的视觉体验。</span>
+      </div>
+      <div class="disco-description-statistics">
+        <moz-five-star rating="4.5044"></moz-five-star>
+        <span class="disco-user-count" data-l10n-args="{&quot;dailyUsers&quot;:1227294}" data-l10n-id="user-count">用户量：1,227,294</span>
+      </div>
+    </span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      </div></recommended-addon-card><recommended-addon-card><div class="card addon">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/2613823-64.png">
+          <div class="card-contents">
+            <div class="addon-name-container">
+      <div class="disco-card-head">
+        <h3 class="disco-addon-name">Consent-O-Matic</h3>
+        <span class="disco-addon-author" data-l10n-args="{&quot;author&quot;:&quot;CAVI - Aarhus University&quot;}" data-l10n-id="created-by-author">作者：<a data-l10n-name="author" target="_blank" href="https://addons.mozilla.org/zh-CN/firefox/addon/consent-o-matic/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=discopane-entry-link">CAVI - Aarhus University</a></span>
+      </div>
+      <button class="disco-cta-button" action="install-addon" data-l10n-id="install-extension-button">添加至 Firefox</button>
+      <button class="disco-cta-button" data-l10n-id="manage-addon-button" action="manage-addon" hidden="">管理</button>
+    </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">
+      <div>
+        <span class="disco-description-main">Automatically deny cookie pop-up tracking requests.</span>
+      </div>
+      <div class="disco-description-statistics">
+        <moz-five-star rating="4.3251"></moz-five-star>
+        <span class="disco-user-count" data-l10n-args="{&quot;dailyUsers&quot;:59535}" data-l10n-id="user-count">用户量：59,535</span>
+      </div>
+    </span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      </div></recommended-addon-card><recommended-addon-card><div class="card addon">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/525044-64.png">
+          <div class="card-contents">
+            <div class="addon-name-container">
+      <div class="disco-card-head">
+        <h3 class="disco-addon-name">OneTab</h3>
+        <span class="disco-addon-author" data-l10n-args="{&quot;author&quot;:&quot;OneTab Team&quot;}" data-l10n-id="created-by-author">作者：<a data-l10n-name="author" target="_blank" href="https://addons.mozilla.org/zh-CN/firefox/addon/onetab/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=discopane-entry-link">OneTab Team</a></span>
+      </div>
+      <button class="disco-cta-button" action="install-addon" data-l10n-id="install-extension-button">添加至 Firefox</button>
+      <button class="disco-cta-button" data-l10n-id="manage-addon-button" action="manage-addon" hidden="">管理</button>
+    </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">
+      <div>
+        <span class="disco-description-main">将您打开的所有标签页转化为一个列表，便于轻松管理和加快 Firefox 的速度。</span>
+      </div>
+      <div class="disco-description-statistics">
+        <moz-five-star rating="4.1488"></moz-five-star>
+        <span class="disco-user-count" data-l10n-args="{&quot;dailyUsers&quot;:159216}" data-l10n-id="user-count">用户量：159,216</span>
+      </div>
+    </span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      </div></recommended-addon-card><recommended-addon-card><div class="card addon">
+        <img class="card-heading-image" role="presentation" hidden="">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="" src="%E9%99%84%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_files/866226-64.png">
+          <div class="card-contents">
+            <div class="addon-name-container">
+      <div class="disco-card-head">
+        <h3 class="disco-addon-name">LeechBlock NG</h3>
+        <span class="disco-addon-author" data-l10n-args="{&quot;author&quot;:&quot;James Anderson&quot;}" data-l10n-id="created-by-author">作者：<a data-l10n-name="author" target="_blank" href="https://addons.mozilla.org/zh-CN/firefox/addon/leechblock-ng/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=discopane-entry-link">James Anderson</a></span>
+      </div>
+      <button class="disco-cta-button" action="install-addon" data-l10n-id="install-extension-button">添加至 Firefox</button>
+      <button class="disco-cta-button" data-l10n-id="manage-addon-button" action="manage-addon" hidden="">管理</button>
+    </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1">
+      <div>
+        <span class="disco-description-main">屏蔽浪费时间的网站，以便您专注于手头的任务。</span>
+      </div>
+      <div class="disco-description-statistics">
+        <moz-five-star rating="4.8221"></moz-five-star>
+        <span class="disco-user-count" data-l10n-args="{&quot;dailyUsers&quot;:101772}" data-l10n-id="user-count">用户量：101,772</span>
+      </div>
+    </span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="" data-l10n-attrs="heading,message" role="alert" message="该扩展将在 Firefox 重启后完成更新。">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button">立即更新</button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="" data-l10n-attrs="heading,message" role="alert">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      </div></recommended-addon-card></recommended-addon-list>
+      <footer is="recommended-footer" class="view-footer">
+      <div class="amo-link-container view-footer-item">
+        <button class="primary" action="open-amo" data-l10n-id="find-more-addons">寻找更多附加组件</button>
+      </div>
+      <div class="view-footer-item">
+        <a class="privacy-policy-link" data-l10n-id="privacy-policy" target="_blank" href="https://www.mozilla.org/privacy/firefox/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_content=privacy-policy-link#addons">隐私政策</a>
+      </div>
+    </footer>
+    </recommended-extensions-section></div>
+      </div>
+    </div>
+
+    <proxy-context-menu id="contentAreaContextMenu"></proxy-context-menu>
+
+    <template name="addon-page-header">
+      <div class="sticky-container">
+        <div class="main-search">
+          <label for="search-addons" class="search-label" data-l10n-id="default-heading-search-label"></label>
+          <search-addons></search-addons>
+        </div>
+        <div class="main-heading">
+          <button class="back-button" action="go-back" data-l10n-id="header-back-button" hidden=""></button>
+          <h1 class="header-name"></h1>
+          <div class="spacer"></div>
+          <addon-updates-message id="updates-message" hidden=""></addon-updates-message>
+          <div class="page-options-menu">
+            <button class="more-options-button" action="page-options" aria-haspopup="menu" aria-expanded="false" data-l10n-id="addon-page-options-button"></button>
+          </div>
+        </div>
+      </div>
+      <global-warnings></global-warnings>
+    </template>
+
+    <template name="addon-page-options">
+      <panel-list>
+        <panel-item action="check-for-updates" data-l10n-id="addon-updates-check-for-updates" data-l10n-attrs="accesskey"></panel-item>
+        <panel-item action="view-recent-updates" data-l10n-id="addon-updates-view-updates" data-l10n-attrs="accesskey"></panel-item>
+        <hr>
+        <panel-item action="install-from-file" data-l10n-id="addon-install-from-file" data-l10n-attrs="accesskey"></panel-item>
+        <panel-item action="debug-addons" data-l10n-id="addon-open-about-debugging" data-l10n-attrs="accesskey"></panel-item>
+        <hr>
+        <panel-item action="set-update-automatically" data-l10n-id="addon-updates-update-addons-automatically" data-l10n-attrs="accesskey" type="checkbox"></panel-item>
+        <panel-item action="reset-update-states" data-l10n-attrs="accesskey"></panel-item>
+        <hr>
+        <panel-item action="manage-shortcuts" data-l10n-id="addon-manage-extensions-shortcuts" data-l10n-attrs="accesskey"></panel-item>
+      </panel-list>
+    </template>
+
+    <template name="addon-options">
+      <panel-list>
+        <panel-item data-l10n-id="remove-addon-button" action="remove"></panel-item>
+        <panel-item data-l10n-id="install-update-button" action="install-update" badged=""></panel-item>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences"></panel-item>
+        <hr>
+        <panel-item data-l10n-id="report-addon-button" action="report"></panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand"></panel-item>
+      </panel-list>
+    </template>
+
+    <template name="plugin-options">
+      <panel-list>
+        <panel-item data-l10n-id="always-activate-button" action="always-activate" type="checkbox"></panel-item>
+        <panel-item data-l10n-id="never-activate-button" action="never-activate" type="checkbox"></panel-item>
+        <hr>
+        <panel-item data-l10n-id="preferences-addon-button" action="preferences"></panel-item>
+        <hr>
+        <panel-item data-l10n-id="manage-addon-button" action="expand"></panel-item>
+      </panel-list>
+    </template>
+
+    <template name="addon-permissions-list">
+      <!-- Permissions -->
+      <div class="addon-permissions-required" hidden="">
+        <h2 class="permission-header" data-l10n-id="addon-permissions-required"></h2>
+        <ul class="addon-permissions-list"></ul>
+      </div>
+      <div class="addon-permissions-optional" hidden="">
+        <h2 class="permission-header" data-l10n-id="addon-permissions-optional"></h2>
+        <ul class="addon-permissions-list"></ul>
+      </div>
+
+      <!-- Data collection -->
+      <div class="addon-data-collection-permissions-required" hidden="">
+        <h2 class="permission-header" data-l10n-id="addon-permissions-required-data-collection"></h2>
+        <ul class="addon-permissions-list"></ul>
+      </div>
+      <div class="addon-data-collection-permissions-optional" hidden="">
+        <h2 class="permission-header" data-l10n-id="addon-permissions-optional-data-collection"></h2>
+        <ul class="addon-permissions-list"></ul>
+      </div>
+
+      <div class="addon-detail-row addon-permissions-empty" data-l10n-id="addon-permissions-empty2" hidden=""></div>
+
+      <div class="addon-detail-row">
+        <a is="moz-support-link" support-page="extension-permissions" data-l10n-id="addon-permissions-learnmore"></a>
+      </div>
+    </template>
+
+    <template name="addon-sitepermissions-list">
+      <div class="addon-permissions-required" hidden="">
+        <h2 class="permission-header" data-l10n-id="addon-sitepermissions-required">
+          <span data-l10n-name="hostname" class="addon-sitepermissions-host"></span>
+        </h2>
+        <ul class="addon-permissions-list"></ul>
+      </div>
+    </template>
+
+    <template name="card">
+      <div class="card addon">
+        <img class="card-heading-image" role="presentation">
+        <div class="addon-card-collapsed">
+          <img class="card-heading-icon addon-icon" alt="">
+          <div class="card-contents">
+            <div class="addon-name-container">
+              <a class="addon-badge addon-badge-recommended" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-recommended4" hidden="">
+              </a>
+              <a class="addon-badge addon-badge-line" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-line4" hidden="">
+              </a>
+              <a class="addon-badge addon-badge-verified" is="moz-support-link" support-page="add-on-badges" utm-content="promoted-addon-badge" data-l10n-id="addon-badge-verified4" hidden="">
+              </a>
+              <a class="addon-badge addon-badge-private-browsing-allowed" is="moz-support-link" support-page="extensions-pb" data-l10n-id="addon-badge-private-browsing-allowed3" hidden="">
+              </a>
+              <div class="spacer"></div>
+              <button class="theme-enable-button" action="toggle-disabled" hidden=""></button>
+              <moz-toggle class="extension-enable-button" action="toggle-disabled" data-l10n-id="extension-enable-addon-button-label" hidden=""></moz-toggle>
+              <mlmodel-card-header-additions></mlmodel-card-header-additions>
+              <button class="more-options-button" action="more-options" data-l10n-id="addon-options-button" aria-haspopup="menu" aria-expanded="false"></button>
+            </div>
+            <mlmodel-card-list-additions></mlmodel-card-list-additions>
+            <!-- This ends up in the tab order when the ellipsis happens, but it isn't necessary. -->
+            <span class="addon-description" tabindex="-1"></span>
+          </div>
+        </div>
+        <moz-message-bar class="update-postponed-bar" data-l10n-id="install-postponed-message2" align="center" hidden="">
+          <button slot="actions" action="install-postponed" data-l10n-id="install-postponed-button"></button>
+        </moz-message-bar>
+        <moz-message-bar class="addon-card-message" align="center" hidden="">
+          <!-- A button or a SUMO page link are going to be slotted into this messagebar
+               (e.g. a button is used for non-SUMO links, like blocklist urls).
+               See addon-card custom element's updateMessage method and
+               getAddonMessageInfo helper defined in aboutaddons.js.
+           -->
+        </moz-message-bar>
+      </div>
+    </template>
+
+    <template name="addon-name-container-in-disco-card">
+      <div class="disco-card-head">
+        <h3 class="disco-addon-name"></h3>
+        <span class="disco-addon-author"><a data-l10n-name="author" target="_blank"></a></span>
+      </div>
+      <button class="disco-cta-button" action="install-addon"></button>
+      <button class="disco-cta-button" data-l10n-id="manage-addon-button" action="manage-addon"></button>
+    </template>
+
+    <template name="addon-description-in-disco-card">
+      <div>
+        <span class="disco-description-main"></span>
+      </div>
+      <div class="disco-description-statistics">
+        <moz-five-star></moz-five-star>
+        <span class="disco-user-count"></span>
+      </div>
+    </template>
+
+    <template name="addon-details">
+      <button-group class="tab-group">
+        <button is="named-deck-button" deck="details-deck" name="details" data-l10n-id="details-addon-button" class="tab-button ghost-button"></button>
+        <button is="named-deck-button" deck="details-deck" name="preferences" data-l10n-id="preferences-addon-button" class="tab-button ghost-button"></button>
+        <button is="named-deck-button" deck="details-deck" name="permissions" data-l10n-id="permissions-addon-button" class="tab-button ghost-button"></button>
+        <button is="named-deck-button" deck="details-deck" name="release-notes" data-l10n-id="release-notes-addon-button" class="tab-button ghost-button"></button>
+      </button-group>
+      <named-deck id="details-deck" is-tabbed="">
+        <section name="details">
+          <div class="addon-detail-description-wrapper">
+            <div class="addon-detail-description"></div>
+            <button class="button-link addon-detail-description-toggle" data-l10n-id="addon-detail-description-expand" hidden=""></button>
+          </div>
+          <div class="addon-detail-contribute">
+            <label data-l10n-id="detail-contributions-description"></label>
+            <button class="addon-detail-contribute-button" action="contribute" data-l10n-id="detail-contributions-button" data-l10n-attrs="accesskey"></button>
+          </div>
+          <div class="addon-detail-sitepermissions">
+            <addon-sitepermissions-list></addon-sitepermissions-list>
+          </div>
+          <div class="addon-detail-mlmodel">
+            <addon-mlmodel-details></addon-mlmodel-details>
+          </div>
+          <div class="addon-detail-row addon-detail-row-updates" role="group" data-l10n-id="addon-detail-group-label-updates">
+            <span data-l10n-id="addon-detail-updates-label"></span>
+            <div class="addon-detail-actions">
+              <button class="button-link" data-l10n-id="addon-detail-update-check-label" action="update-check" hidden=""></button>
+              <label class="radio-container-with-text">
+                <input type="radio" name="autoupdate" value="1">
+                <span data-l10n-id="addon-detail-updates-radio-default"></span>
+              </label>
+              <label class="radio-container-with-text">
+                <input type="radio" name="autoupdate" value="2">
+                <span data-l10n-id="addon-detail-updates-radio-on"></span>
+              </label>
+              <label class="radio-container-with-text">
+                <input type="radio" name="autoupdate" value="0">
+                <span data-l10n-id="addon-detail-updates-radio-off"></span>
+              </label>
+            </div>
+          </div>
+          <div class="addon-detail-row addon-detail-row-has-help addon-detail-row-private-browsing" role="group" data-l10n-id="addon-detail-group-label-private-browsing" hidden="">
+            <span data-l10n-id="detail-private-browsing-label"></span>
+            <div class="addon-detail-actions">
+              <label class="radio-container-with-text">
+                <input type="radio" name="private-browsing" value="1">
+                <span data-l10n-id="addon-detail-private-browsing-allow"></span>
+              </label>
+              <label class="radio-container-with-text">
+                <input type="radio" name="private-browsing" value="0">
+                <span data-l10n-id="addon-detail-private-browsing-disallow"></span>
+              </label>
+            </div>
+          </div>
+          <div class="addon-detail-row addon-detail-help-row" data-l10n-id="addon-detail-private-browsing-help" hidden="">
+            <a is="moz-support-link" support-page="extensions-pb" data-l10n-name="learn-more"></a>
+          </div>
+          <div class="addon-detail-row addon-detail-row-has-help addon-detail-row-private-browsing-disallowed" hidden="">
+            <label data-l10n-id="detail-private-disallowed-label"></label>
+          </div>
+          <div class="addon-detail-row addon-detail-help-row" data-l10n-id="detail-private-disallowed-description2" hidden="">
+            <a is="moz-support-link" data-l10n-name="learn-more" support-page="extensions-pb"></a>
+          </div>
+          <div class="addon-detail-row addon-detail-row-has-help addon-detail-row-private-browsing-required" hidden="">
+            <label class="learn-more-label-link" data-l10n-id="detail-private-required-label"></label>
+          </div>
+          <div class="addon-detail-row addon-detail-help-row" data-l10n-id="detail-private-required-description2" hidden="">
+            <a is="moz-support-link" data-l10n-name="learn-more" support-page="extensions-pb"></a>
+          </div>
+          <div class="addon-detail-row addon-detail-row-has-help addon-detail-row-quarantined-domains" role="group" data-l10n-id="addon-detail-group-label-quarantined-domains" hidden="">
+            <span data-l10n-id="addon-detail-quarantined-domains-label"></span>
+            <div class="addon-detail-actions">
+              <label class="radio-container-with-text">
+                <input type="radio" name="quarantined-domains-user-allowed" value="1">
+                <span data-l10n-id="addon-detail-quarantined-domains-allow"></span>
+              </label>
+              <label class="radio-container-with-text">
+                <input type="radio" name="quarantined-domains-user-allowed" value="0">
+                <span data-l10n-id="addon-detail-quarantined-domains-disallow"></span>
+              </label>
+            </div>
+          </div>
+          <div class="addon-detail-row addon-detail-help-row" hidden="">
+            <span data-l10n-id="addon-detail-quarantined-domains-help"></span>
+            <a is="moz-support-link" support-page="quarantined-domains"></a>
+          </div>
+          <div class="addon-detail-row addon-detail-row-author">
+            <label data-l10n-id="addon-detail-author-label"></label>
+            <a target="_blank"></a>
+          </div>
+          <div class="addon-detail-row addon-detail-row-version">
+            <label data-l10n-id="addon-detail-version-label"></label>
+          </div>
+          <div class="addon-detail-row addon-detail-row-lastUpdated">
+            <label data-l10n-id="addon-detail-last-updated-label"></label>
+          </div>
+          <div class="addon-detail-row addon-detail-row-homepage">
+            <label data-l10n-id="addon-detail-homepage-label"></label>
+            <!-- URLs should always be displayed as LTR. -->
+            <a target="_blank" dir="ltr"></a>
+          </div>
+          <div class="addon-detail-row addon-detail-row-rating">
+            <label data-l10n-id="addon-detail-rating-label"></label>
+            <div class="addon-detail-rating">
+              <moz-five-star></moz-five-star>
+              <a target="_blank"></a>
+            </div>
+          </div>
+        </section>
+        <inline-options-browser name="preferences"></inline-options-browser>
+        <addon-permissions-list name="permissions"></addon-permissions-list>
+        <update-release-notes name="release-notes"></update-release-notes>
+      </named-deck>
+    </template>
+
+    <template name="colorway-removal-notice">
+      <moz-message-bar data-l10n-id="colorway-removal-notice-message" dismissable="">
+        <a is="moz-support-link" support-page="colorways" data-l10n-id="colorway-removal-notice-learn-more" slot="support-link"></a>
+
+        <button slot="actions" action="open-amo-colorway-collection" data-l10n-id="colorway-removal-notice-button"></button>
+      </moz-message-bar>
+    </template>
+
+    <template name="taar-notice">
+      <moz-message-bar class="discopane-notice" data-l10n-id="discopane-notice-recommendations2" dismissable="">
+        <a is="moz-support-link" support-page="personalized-addons" data-l10n-id="discopane-notice-learn-more" action="notice-learn-more" slot="support-link"></a>
+      </moz-message-bar>
+    </template>
+
+    <template name="recommended-footer">
+      <div class="amo-link-container view-footer-item">
+        <button class="primary" action="open-amo" data-l10n-id="find-more-addons"></button>
+      </div>
+      <div class="view-footer-item">
+        <a class="privacy-policy-link" data-l10n-id="privacy-policy" target="_blank"></a>
+      </div>
+    </template>
+
+    <template name="discopane">
+      <header>
+        <p>
+          <span data-l10n-id="discopane-intro3">
+            <a class="discopane-intro-learn-more-link" is="moz-support-link" support-page="recommended-extensions-program" data-l10n-name="learn-more-trigger">
+            </a>
+          </span>
+        </p>
+      </header>
+      <taar-notice></taar-notice>
+      <recommended-addon-list></recommended-addon-list>
+      <footer is="recommended-footer" class="view-footer"></footer>
+    </template>
+
+    <template name="recommended-extensions-section">
+      <h2 data-l10n-id="recommended-extensions-heading" class="header-name recommended-heading"></h2>
+      <taar-notice></taar-notice>
+      <recommended-addon-list type="extension" hide-installed=""></recommended-addon-list>
+      <footer is="recommended-footer" class="view-footer"></footer>
+    </template>
+
+    <template name="recommended-themes-footer">
+      <p data-l10n-id="recommended-theme-1" class="theme-recommendation">
+        <a data-l10n-name="link" target="_blank"></a>
+      </p>
+      <div class="amo-link-container view-footer-item">
+        <button class="primary" action="open-amo" data-l10n-id="find-more-themes"></button>
+      </div>
+    </template>
+
+    <template name="recommended-themes-section">
+      <h2 data-l10n-id="recommended-themes-heading" class="header-name recommended-heading"></h2>
+      <recommended-addon-list type="theme" hide-installed=""></recommended-addon-list>
+      <footer is="recommended-themes-footer" class="view-footer"></footer>
+    </template>
+
+    <template id="shortcut-view">
+      <div class="error-message">
+        <img class="error-message-icon" src="chrome://global/skin/arrow/panelarrow-vertical.svg">
+        <div class="error-message-label"></div>
+      </div>
+      <message-bar-stack id="duplicate-warning-messages" reverse="" max-message-bar-count="5">
+      </message-bar-stack>
+    </template>
+
+    <template id="shortcut-card-template">
+      <div class="card card-no-hover shortcut">
+        <div class="card-heading">
+          <img class="card-heading-icon addon-icon">
+          <h2 class="addon-name"></h2>
+        </div>
+      </div>
+    </template>
+
+    <template id="shortcut-row-template">
+      <div class="shortcut-row">
+        <label class="shortcut-label"></label>
+        <input class="shortcut-input" data-l10n-id="shortcuts-input" type="text" readonly="readonly">
+        <button class="shortcut-remove-button ghost-button" data-l10n-id="shortcuts-remove-button" data-l10n-attrs="aria-label"></button>
+      </div>
+    </template>
+
+    <template id="expand-row-template">
+      <div class="expand-row">
+        <button class="expand-button"></button>
+      </div>
+    </template>
+
+    <template id="shortcuts-no-addons">
+      <div data-l10n-id="shortcuts-no-addons"></div>
+    </template>
+
+    <template id="shortcuts-no-commands-template">
+      <div data-l10n-id="shortcuts-no-commands"></div>
+      <ul class="shortcuts-no-commands-list"></ul>
+    </template>
+  
+
+</body></html>
