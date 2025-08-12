@@ -1,0 +1,390 @@
+! Jan 1, 2025 https://pan.baidu.com
+pan.baidu.com##.wp-s-aside-nav__main-top
+pan.baidu.com##.wp-s-aside-nav__main-bottom
+pan.baidu.com##.nd-chat-with-sug
+pan.baidu.com##.clearfix.wp-s-header__right
+pan.baidu.com##.nd-new-main-list__detail.nd-detail
+pan.baidu.com##.u-input__inner
+pan.baidu.com##.wp-s-search__search-text
+
+! 2025年1月1日 https://www.google.com
+www.google.com##.YmvwI.BaegVc
+
+! 2024年12月30日 https://www.google.com
+www.google.com##.YmvwI.BaegVc
+
+www.google.com##.XDyW0e
+www.google.com##.Lu57id
+www.google.com##.gb_C > .gb_A
+www.google.com##[href^="/intl/zh/googlefinance/disclaimer/"]
+www.google.com##.mWcf0e.PKDVJd > .LRZwuc.VfL2Y > .CNbPnc.W7GCoc
+
+! 2024年12月31日 https://zhuanlan.zhihu.com
+zhuanlan.zhihu.com##.Post-Author > .JmYzaky7MEPMFcJDLNMG.epMJl0lFQuYbC7jrwr_o.Button--blue.Button--primary.FEfUrdfMIKpQDJDqkjte.FollowButton.Button
+zhuanlan.zhihu.com##.JmYzaky7MEPMFcJDLNMG.Button--blue.FEfUrdfMIKpQDJDqkjte.ColumnPageHeader-WriteButton.Button
+zhuanlan.zhihu.com###Popover1-toggle > .Zi--Dots.Zi
+zhuanlan.zhihu.com###Popover9-toggle > button
+zhuanlan.zhihu.com##.like
+zhuanlan.zhihu.com###Popover10-toggle > button
+zhuanlan.zhihu.com##.ContentItem-actions
+zhuanlan.zhihu.com###Popover8-toggle > button
+
+! 2024年12月31日 https://www.doubao.com
+www.doubao.com##.semi-button-with-icon.btn-MFACr0.text-s-font-base-strong.justify-center.items-center.flex.border-0.\!rounded-12.\!pr-14.icon-a2WxRL.medium-UIYozi.tertiary-kH1mvr.samantha-button-aiwXEk.semi-button-primary.semi-button
+
+! 2025年1月1日 https://www.sohu.com
+www.sohu.com##.share-interaction-c
+www.sohu.com##.user-info
+
+! 2025年1月1日 https://zh.wikipedia.org
+zh.wikipedia.org###vector-appearance-dropdown > .vector-dropdown-checkbox
+
+! 2025年1月1日 https://www.google.com
+www.google.com##.Fp7My.z1asCe.CdXeWb
+www.google.com###SIvCob
+www.google.com##.lJ9FBc.FPdoLc
+www.google.com##.gb_W
+
+! 2025年1月2日 https://zhuanlan.zhihu.com
+zhuanlan.zhihu.com##.css-d5yzzu.fEPKGkUK5jyc4fUuT0QP.Button--gray.Button--plain.FEfUrdfMIKpQDJDqkjte.Button
+
+! 2025年1月4日 https://zh.wikipedia.org
+zh.wikipedia.org##td:nth-of-type(2) > [href="#"]
+zh.wikipedia.org###asn-dismissable-notice > tr > td
+
+! 2025年1月4日 https://open.spotify.com
+open.spotify.com##.encore-over-media-set.gDlqhe.ButtonInner-sc-14ud5tc-0
+open.spotify.com##.encore-text-body-small-bold.bsgWDU.Button-sc-1dqy6lx-0
+open.spotify.com##.Upqw01TOXETOmR5Td7Dj.encore-inverted-light-set.fcsOIN.ButtonInner-sc-14ud5tc-0
+open.spotify.com##.UpiE7J6vPrJIa59qxts4.ePPpO_NuGDUxVRTw7y6W
+open.spotify.com##.WtC1lGbmQRplD6JBhNFU.encore-text-body-small-bold.fLVXqf.Button-sc-1dqy6lx-0
+open.spotify.com##.LayoutResizer__inline-end.LayoutResizer__resize-bar
+open.spotify.com##.cqasRA.Svg-sc-ytk21e-0
+open.spotify.com##.IpXjqI9ouS_N5zi0WM88
+open.spotify.com##.contentSpacing.hV9v6y_uYwdAsoiOHpzk
+open.spotify.com##.poz9gZKE7xqFwgk231J4
+open.spotify.com##span.w1TBi3o5CTM7zW1EB3Bm.encore-internal-color-text-subdued.encore-text-body-small.encore-text:nth-of-type(1)
+
+! 2025年1月7日 https://www.douyin.com
+||lf-douyin-pc-web.douyinstatic.com/obj/douyin-pc-web/ies/douyin_web/media/nav_dark_entry_optimize_v4.ecb5f5489d1fb3ec.png$image
+||lf-douyin-pc-web.douyinstatic.com/obj/douyin-pc-web/ies/douyin_web/media/nav_dark_entry_optimize_v4.ecb5f5489d1fb3ec.png$image
+www.douyin.com##.jjWP1wt0.jOQR5oNC.p6Y4jA15.Zmm5iRSb.zGL_Zelf.tab-discover > .kM0XH6VH.uz1VJwFY > .WsPcklj7 > .zYr3_wX8
+||lf-douyin-pc-web.douyinstatic.com/obj/douyin-pc-web/ies/douyin_web/media/nav_dark_entry_optimize_v4.ecb5f5489d1fb3ec.png$image
+
+! 2025年1月7日 https://macosicons.com
+macosicons.com##div.resourcesLink > [href] > ._coral-Button--quiet._coral-Button--primary._coral-Button
+macosicons.com##.p-l-8 > ._coral-Button--cta._coral-Button
+||parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/14a38b18f6370542d25bdabf1c3e49f1_l7MAtIRYp2.png$image
+||parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/14a38b18f6370542d25bdabf1c3e49f1_l7MAtIRYp2.png$image
+macosicons.com##div > ._coral-Button--quiet._coral-Button--primary._coral-Button
+macosicons.com##[href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions"] > ._coral-Button--quiet._coral-Button--primary._coral-Button
+
+! 2025年1月7日 https://www.douyin.com
+www.douyin.com##.Y_NIe5h4 > svg > path
+www.douyin.com##.Y_NIe5h4 > svg > circle
+
+! 2025年1月8日 https://www.douyin.com
+www.douyin.com##.LN88nDkS
+www.douyin.com##.r4Wnbr_N
+
+! 2025年1月8日 https://www.twitch.tv
+www.twitch.tv##.jNIlkd.Layout-sc-1xcs6mc-0
+www.twitch.tv##.hKEeil.Layout-sc-1xcs6mc-0 > .hatIYF.Layout-sc-1xcs6mc-0 > div > .kBtJDm.InjectLayout-sc-1i43xsx-0 > .eSFFfM.ScButtonIcon-sc-9yap0r-0.kIbAir.ScCoreButton-sc-ocjdkq-0
+
+! 2025年1月10日 https://www.zhihu.com
+www.zhihu.com##.AppHeader-userInfo > .Popover
+||pic3.zhimg.com/70/v2-08117141d988d7528104b0c82207f756.webp$image
+www.zhihu.com###Popover24-toggle > .css-1iyxy9k
+www.zhihu.com##.css-7dgah8.ZDI--ChatBubbleTwoFill24.ZDI > path
+www.zhihu.com###Popover24-toggle > .css-nvf2q2
+||pic3.zhimg.com/v2-48ccb4fa9055529db41fd4a0c9432f7a_720w.webp?source=d6434cab$image
+||pic3.zhimg.com/v2-48ccb4fa9055529db41fd4a0c9432f7a_720w.webp?source=d6434cab$image
+www.zhihu.com##.QuestionHeader-side > .QuestionButtonGroup > a > .JmYzaky7MEPMFcJDLNMG.Button--blue.FEfUrdfMIKpQDJDqkjte.Button
+www.zhihu.com##.QuestionHeader-side > .QuestionButtonGroup > .JmYzaky7MEPMFcJDLNMG.epMJl0lFQuYbC7jrwr_o.Button--blue.Button--primary.FEfUrdfMIKpQDJDqkjte.FollowButton.Button
+||pic4.zhimg.com/v2-6ff3d318b5045cec130f552cba5afc68_720w.webp?source=d6434cab$image
+
+! 2025年1月10日 https://www.douyin.com
+www.douyin.com##.HkP9HilZ.wIIDHLHs.aRHD2qhc.niTxyqq5 > .qbeFLQBg > .jUqDCyab.YEhxqQNi
+www.douyin.com##.K5AaygDB
+www.douyin.com##.K5XBpXG0
+www.douyin.com##.HkP9HilZ.wIIDHLHs.aRHD2qhc.niTxyqq5 > .YQK6ciuU > .btn-title
+www.douyin.com##.HkP9HilZ.wIIDHLHs.aRHD2qhc.niTxyqq5 > .YQK6ciuU > .ACMjZN5h > path
+www.douyin.com##.HkP9HilZ.wIIDHLHs.aRHD2qhc.niTxyqq5
+
+! 2025年1月11日 https://www.youtube.com
+www.youtube.com##.yt-spec-button-shape-next--icon-only-default.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--text.yt-spec-button-shape-next > yt-touch-feedback-shape > .yt-spec-touch-feedback-shape--overlay-touch-response.yt-spec-touch-feedback-shape > .yt-spec-touch-feedback-shape__stroke
+www.youtube.com##.yt-spec-button-shape-next--icon-only-default.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--text.yt-spec-button-shape-next > yt-touch-feedback-shape > .yt-spec-touch-feedback-shape--overlay-touch-response.yt-spec-touch-feedback-shape
+
+! 2025年1月19日 https://www.tiktok.com
+||p16-sign-useast2a.tiktokcdn.com/obj/tos-useast2a-p-0037-euttp/oEP6hsFRHQToEomDEn9QaADxFsfDABRCcQWP6e?lk3s=81f88b70&x-expires=1737442800&x-signature=ViRwjy84zbJXPm0fmuR8v2%2Frmaw%3D&shp=81f88b70&shcp=-$image
+||p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/o4AAaLR7T2exGGO5jeUChfIvAoIODr9QbO9KQc?lk3s=b59d6b55&x-expires=1737442800&x-signature=oGL2LAq0IOjfJHJR5ruqbG4HPG0%3D&shp=b59d6b55&shcp=-$image
+www.tiktok.com##.e18xsmh1.css-1n58pjl-SpanCopyright
+www.tiktok.com##h4.e18xsmh8.css-271xba-H4LinkListHeader:nth-of-type(3)
+www.tiktok.com##.e18xsmh8.css-l39tuu-H4LinkListHeader
+www.tiktok.com##h4.e18xsmh8.css-271xba-H4LinkListHeader:nth-of-type(2)
+
+! 2025年1月21日 https://www.speedtest.cn
+||file2.speedtest.cn/images/2d15e2b7983705843379d15782cd0545.jpg$image
+||file2.speedtest.cn/images/87261fe7d600271639c1a97d177ef8be.jpg$image
+||file2.speedtest.cn/images/2d15e2b7983705843379d15782cd0545.jpg$image
+
+! 2025年1月27日 https://www.douyin.com
+||p3-feelgood-sign.byteimg.com/feelgood/fg-custom-entry-1.png~tplv-luk1ko7gmt-image.png?x-expires=1955955925&x-signature=3Y4aoinLS09b%2FCK5VPYW8FRpW0Q%3D$image
+
+! 2025年1月27日 https://zhuanlan.zhihu.com
+zhuanlan.zhihu.com##.css-1qk9jmi
+
+! 2025年1月28日 https://open.spotify.com
+open.spotify.com##.e-9541-overflow-wrap-anywhere.encore-text-body-small-bold.hpeoUw.Button-sc-1dqy6lx-0
+
+! 2025年1月28日 https://chat.deepseek.com
+chat.deepseek.com##.b91228e4 > .ds-icon > svg
+
+! 2025年1月31日 https://www.youtube.com
+www.youtube.com###country-code
+
+! 2025年2月18日 https://www.google.com
+www.google.com##.gb_D > .gb_B
+
+! 2025年2月19日 https://www.feishu.cn
+www.feishu.cn##.feishu_linkchat-use.feishu_linkchat-item > div > p
+www.feishu.cn##.feishu_linkchat-container > div > div > div > .feishu_linkchat-item > div > div > .hc_Svg
+www.feishu.cn##.feishu_linkchat-container > div
+
+! 2025年2月20日 https://www.douyin.com
+www.douyin.com##.kcl3OqaH
+www.douyin.com##.Jq6STbmt.aRHD2qhc.niTxyqq5 > .qbeFLQBg > .YEhxqQNi
+www.douyin.com##.isDark.x6CkPbQ5
+
+! 2025年2月20日 https://www.google.com
+www.google.com##.SSwjIe.KxwPGc
+www.google.com##div.gb_0.gb_Z:nth-of-type(2) > .gb_X
+www.google.com##.gb_X
+
+! 2025年2月21日 https://www.douyin.com
+||p3-pc-sign.douyinpic.com/tos-cn-p-0015/ogCBtcjAdD2DbKsBCXD9GnfLA5AFoaEngQiQof~tplv-dy-360p.jpeg?biz_tag=pcweb_cover&from=327834062&lk3s=138a59ce&s=PackSourceEnum_FEED&sc=origin_cover&se=false&x-expires=1741352400&x-signature=GNi%2BKJcJHlELN6rnajvOhqAMXK4%3D$image
+||lf-douyin-pc-web.douyinstatic.com/obj/douyin-pc-web/ies/douyin_web/media/nav_light_entry_optimize_v4.675d3cab6de2c4d1.png$image
+
+! 2025年2月23日 https://www.twitch.tv
+www.twitch.tv##.prime-offers.cwtKyw.Layout-sc-1xcs6mc-0 > .hatIYF.Layout-sc-1xcs6mc-0 .kBtJDm.InjectLayout-sc-1i43xsx-0 .eSFFfM.ScButtonIcon-sc-9yap0r-0.kIbAir.ScCoreButton-sc-ocjdkq-0
+www.twitch.tv##.WnDLQ.Layout-sc-1xcs6mc-0 > .eSFFfM.ScButtonIcon-sc-9yap0r-0.kIbAir.ScCoreButton-sc-ocjdkq-0
+www.twitch.tv##.WnDLQ.Layout-sc-1xcs6mc-0 > .hatIYF.Layout-sc-1xcs6mc-0 > div > .kBtJDm.InjectLayout-sc-1i43xsx-0 > .eSFFfM.ScButtonIcon-sc-9yap0r-0.kIbAir.ScCoreButton-sc-ocjdkq-0
+
+! 2025年2月26日 https://open.spotify.com
+open.spotify.com##.R69APjfNV0o9tAbfrWZf.CVuGEUIxLkNKpMds8AFS.encore-text-body-medium.e-9640-form-control.e-9640-baseline.e-9640-form-input
+open.spotify.com##.e-9640-button--leading.e-9640-button--small.e-9640-overflow-wrap-anywhere.encore-text-body-small-bold.hgbBnc.Button-sc-1dqy6lx-0
+open.spotify.com##.WtC1lGbmQRplD6JBhNFU.e-9640-button-tertiary--condensed.e-9640-overflow-wrap-anywhere.encore-text-body-small-bold.erPYsV.Button-sc-1dqy6lx-0
+open.spotify.com##.AIlmv6h8bR5NY5R0VceT
+
+! 2025年2月26日 https://chatgpt.com
+chatgpt.com##.text-token-text-secondary.text-xs.border-token-border-light.border.rounded-full.justify-center.items-center.w-6.h-6.flex
+
+! 2025年2月27日 https://www.google.com
+www.google.com##.rzyADb.z1asCe.ExCKkf > svg
+www.google.com##.BKRPef
+www.google.com##.uU7dJb
+
+! 2025年2月27日 https://www.sohu.com
+www.sohu.com##.head-nav
+www.sohu.com##.head-container
+www.sohu.com##.hot-atlas.bord.clearfix
+
+! 2025年2月27日 https://www.zhihu.com
+||static.zhihu.com/heifetz/assets/sidebar-download-qrcode.9c4d2837.png$image
+www.zhihu.com##.AppBanner-title
+www.zhihu.com##.AppBanner-description
+www.zhihu.com##.AppBanner-layout
+www.zhihu.com##.css-zkfaav
+
+! 2025年2月27日 https://www.douyin.com
+||lf-douyin-pc-web.douyinstatic.com/obj/douyin-pc-web/ies/douyin_web/media/logo-horizontal-small-dark.04fa81ed0b1d6d5e.svg$image
+
+! 2025年3月3日 https://changjiang.yuketang.cn
+changjiang.yuketang.cn##.ai-label-content
+
+! 2025年3月3日 https://www.google.com
+www.google.com##.mWcf0e.s2agxb > .LRZwuc.VfL2Y > .CNbPnc.W7GCoc
+
+! 2025年3月4日 https://www.icourse163.org
+www.icourse163.org###globalAIAssistantBtn
+
+! 2025年3月5日 https://kagi.com
+kagi.com###_0_land_tooltip_message
+kagi.com##.searchFormSubmitBtn.--lg.--primary.btn
+kagi.com##._0_search-input-container.search-input-container > ._0_land_adv_search_btn.land_adv_search_btn > span
+kagi.com##.__open.app_nav_dropdown.k_ui_dropdown._0_k_ui_dropdown > .k_ui_dropdown_first_item._0_k_ui_dropdown_first_item
+kagi.com##.lg\:flex-row.flex-column.justify-between.align-center.flex.px-9.footerInner
+kagi.com##._0_search-input-container.search-input-container > ._0_land_adv_search_btn.land_adv_search_btn > i > svg > path
+kagi.com##._0_search-input-container.search-input-container > ._0_land_adv_search_btn.land_adv_search_btn > i > svg
+kagi.com##.app_nav_dropdown.k_ui_dropdown._0_k_ui_dropdown > .k_ui_dropdown_first_item._0_k_ui_dropdown_first_item
+
+! 2025年3月8日 https://baike.baidu.com
+baike.baidu.com##.toolBtns_OJfCx
+baike.baidu.com##.top-search.clearfix.searchBar > .rightWrapper > .inputWrapper > .searchInput
+baike.baidu.com##.top-search.clearfix.searchBar > .rightWrapper > .lemmaBtn
+baike.baidu.com##.toTop_dRxAW > svg
+baike.baidu.com##.toTop_dRxAW
+
+! 2025年3月8日 https://www.google.com.hk
+www.google.com.hk##.SSwjIe.KxwPGc
+www.google.com.hk##.goxjub
+www.google.com.hk##.gb_X
+www.google.com.hk###gbwa > .gb_D > .gb_B
+www.google.com.hk##.lJ9FBc.FPdoLc > center > .gNO89b
+www.google.com.hk##.lJ9FBc.FPdoLc > center > .RNmpXc
+www.google.com.hk##.XDyW0e
+
+! 2025年3月10日 https://www.baidu.com
+www.baidu.com##.c-wrapper-hot-news-all.c-wrapper-l.c-wrapper.clearfix.main
+www.baidu.com##.new_search_guide_bub
+www.baidu.com##.show-weather
+www.baidu.com##.s-top-right-new.c-color-t.c-font-normal.s-top-right-text
+www.baidu.com##.show-polution-name
+www.baidu.com##.s-isindex-wrap.s-top-left-new
+www.baidu.com##p.lh:nth-of-type(6)
+www.baidu.com##.s-bottom-layer-content > p.lh > .text-color
+
+! 2025年3月18日 https://www.besthdwallpaper.com
+||cdn.bhdw.net/v3.20101/images/hamburger-icon.svg$image
+www.besthdwallpaper.com###AdsErrorModal > .modal-lg.modal-dialog > .modal-content > .modal-footer
+
+! 2025年3月20日 https://onedrive.live.com
+onedrive.live.com##.bannerGleam_860752dd.storageUpsellBanner_860752dd
+
+! 2025年3月22日 https://x.com
+x.com##.r-yz1j6i.r-1upvrn0.r-l5o3uw.css-175oi2r
+
+! 2025年3月27日 https://discord.com
+discord.com##.anchorUnderlineOnHover_edefb8.anchor_edefb8 > .clickable__9293f.iconWrapper__9293f.button__85643
+
+! 2025年3月27日 https://live.douyin.com
+live.douyin.com##.fIHFYwJt
+live.douyin.com###giftPanelEntrance
+||lf6-cdn-tos.douyinstatic.com/obj/venus/pc/icon_big.png$image
+live.douyin.com##.NnDqfcQD.btn > div
+live.douyin.com##.metro.gitBarOptimizeEnabled.h9wtZ0fY
+live.douyin.com##.VmnnsTNS
+live.douyin.com##.q4OfieDg
+
+! 2025年3月28日 https://www.douyin.com
+www.douyin.com##.a5Q47t4v.f6NxBhhV
+www.douyin.com##.f6NxBhhV
+
+! 2025年3月29日 https://pan.baidu.com
+pan.baidu.com##.margin-right-20.vp-personal-aside.vp-aside > .vp-vip-btn
+
+! 2025年3月29日 https://macosicons.com
+macosicons.com##.is-open._coral-Dialog
+
+! 2025年3月30日 https://zhidao.baidu.com
+zhidao.baidu.com##.line.nav-menu
+zhidao.baidu.com##.qb-search-box.search-box-new-all.line.search-box-new
+zhidao.baidu.com##.aside-list
+zhidao.baidu.com##.qb-search.fixed.userbar-renew.userbar
+zhidao.baidu.com##.mod-noshadow.cms-slide-lazy.cms-slide
+zhidao.baidu.com##.wgt-header-title
+
+! 2025年4月4日 https://www.123pan.com
+www.123pan.com##.frontend-layout-header
+
+! 2025年4月10日 https://open.spotify.com
+open.spotify.com##.e-9800-button--leading.e-9800-button--small.e-9800-overflow-wrap-anywhere.encore-text-body-small-bold.dzIYeQ.Button-sc-1dqy6lx-0
+
+! 2025年4月30日 https://onedrive.live.com
+onedrive.live.com##.root-151.ms-MessageBar-multiline.ms-MessageBar
+
+! 2025年6月1日 https://onedrive.live.com
+onedrive.live.com##.bannerGleam_428d55a9.storageUpsellBanner_428d55a9
+
+! 2025年6月5日 https://gemini.google.com
+gemini.google.com##.ng-star-inserted.ui-improvements-phase-1.ng-tns-c3818237080-2
+gemini.google.com##.mat-unthemed.ng-tns-c1014041185-5.speech_dictation_mic_button.mat-mdc-tooltip-trigger.mat-mdc-button-base.mat-mdc-icon-button.mdc-icon-button > div
+
+! 2025年6月19日 https://chatgpt.com
+chatgpt.com##.rtl\:translate-x-1\/2.ltr\:-translate-x-1\/2.start-1\/2.absolute > .dark\:hover\:bg-\[\#414071\].dark\:text-\[\#DCDBF6\].dark\:bg-\[\#373669\].hover\:bg-\[\#E4E4F6\].text-\[\#5D5BD0\].font-medium.text-sm.pe-3\.5.ps-3.py-1\.5.bg-\[\#F1F1FB\].rounded-full.gap-1\.5.items-center.flex
+
+! 2025年7月20日 https://chatgpt.com
+chatgpt.com##.gap-1\.5.items-center.flex.ms-auto > span > .composer-btn
+
+! 2025年8月5日 https://chatgpt.com
+chatgpt.com##.rtl\:translate-x-1\/2.ltr\:-translate-x-1\/2.start-1\/2.absolute > .dark\:hover\:bg-\[\#414071\].dark\:text-\[\#DCDBF6\].dark\:bg-\[\#373669\].hover\:bg-\[\#E4E4F6\].text-\[\#5D5BD0\].bg-\[\#F1F1FB\].font-medium.text-sm.pe-3.ps-2\.5.py-2.rounded-full.gap-1.items-center.flex
+
+! 2025年8月5日 https://chat.deepseek.com
+chat.deepseek.com##.a1e75851
+
+! 2025年8月7日 https://www.google.com
+www.google.com##a.MV3Tnb:nth-of-type(1)
+www.google.com##a.MV3Tnb:nth-of-type(2)
+
+! 2025年8月7日 https://www.google.com
+www.google.com##.gb_A
+www.google.com##.uyS0S
+www.google.com##.jEYSNd
+www.google.com###hdtb-tls > .mXwfNd > .mVH5Fc
+www.google.com##.fLciMb
+www.google.com##.MZy1Rb.z1asCe.KlpaXd > svg
+
+! 2025年8月7日 https://www.bilibili.com
+www.bilibili.com##.header-upload-entry
+www.bilibili.com##.follow-btn-inner
+www.bilibili.com##.not-follow.b-gz.follow-btn.default-btn
+www.bilibili.com##.charge-btn-loaded.new-charge-btn.default-btn
+www.bilibili.com##.video-ai-assistant-bg
+www.bilibili.com##.video-toolbar-item-text.video-note-info
+www.bilibili.com###arc_toolbar_report > .video-toolbar-right
+www.bilibili.com##.more
+||i0.hdslb.com/bfs/face/f15be6a357f52047f3d308a6ca6d75a661e258b5.jpg@96w.webp$image
+www.bilibili.com##.bpx-player-follow-icon > .bpx-common-svg-icon
+||i0.hdslb.com/bfs/face/f15be6a357f52047f3d308a6ca6d75a661e258b5.jpg@96w.webp$image
+www.bilibili.com##.bpx-player-follow
+
+! 2025年8月7日 https://space.bilibili.com
+space.bilibili.com##.right-entry-item--upload.right-entry-item > .v-popover-wrap > [href]
+
+
+! 2025年8月7日 https://space.bilibili.com
+space.bilibili.com##.download-client-trigger.download-entry
+
+! 2025年8月7日 https://www.bilibili.com
+www.bilibili.com##li.right-entry-item > .right-entry__outside > .right-entry-icon > g > path
+www.bilibili.com##.not-follow-charge-btn.old-charge-btn.default-btn
+
+! 2025年8月7日 https://search.bilibili.com
+search.bilibili.com##.header-upload-entry
+search.bilibili.com##li.right-entry-item > .right-entry__outside > .right-entry-text
+search.bilibili.com##li.right-entry-item > .right-entry__outside > .right-entry-icon
+search.bilibili.com##.download-client-trigger.download-entry > span
+search.bilibili.com##.download-client-trigger__icon
+
+! 2025年8月8日 https://www.youtube.com
+www.youtube.com##.ytd-masthead.style-scope > yt-button-shape > .yt-spec-button-shape-next--enable-backdrop-filter-experiment.yt-spec-button-shape-next--icon-only-default.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--text.yt-spec-button-shape-next > yt-touch-feedback-shape > .yt-spec-touch-feedback-shape--touch-response.yt-spec-touch-feedback-shape > .yt-spec-touch-feedback-shape__fill
+www.youtube.com##.ytd-masthead.style-scope > yt-button-shape > .yt-spec-button-shape-next--enable-backdrop-filter-experiment.yt-spec-button-shape-next--icon-only-default.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--text.yt-spec-button-shape-next > yt-touch-feedback-shape > .yt-spec-touch-feedback-shape--touch-response.yt-spec-touch-feedback-shape > .yt-spec-touch-feedback-shape__stroke
+
+! 2025年8月8日 https://www.bilibili.com
+www.bilibili.com##.flexible-roll-btn-inner
+www.bilibili.com##.bili-header__channel
+www.bilibili.com##.bpx-player-top-issue-icon > .bpx-common-svg-icon
+||i0.hdslb.com/bfs/archive/3e16f2f0ee439d735346c16dce9d1543f15244cb.png@3840w_360h_1c*?mirror_report_banner=1$image
+||i0.hdslb.com/bfs/archive/3e16f2f0ee439d735346c16dce9d1543f15244cb.png@3840w_360h_1c*?mirror_report_banner=1$image
+
+! 2025年8月9日 https://www.bilibili.com
+www.bilibili.com##li.v-popover-wrap:nth-of-type(4)
+www.bilibili.com##li.v-popover-wrap:nth-of-type(3)
+www.bilibili.com##.download-client-trigger.download-entry > span
+www.bilibili.com##.download-client-trigger.download-entry
+
+! 2025年8月9日 https://www.google.com
+www.google.com##.MZy1Rb.z1asCe.KlpaXd
+www.google.com##.Tg7LZd.HZVG1b
+
+! 2025年8月10日 https://www.bilibili.com
+www.bilibili.com##.roll-btn.primary-btn
+
+! 2025年8月12日 https://search.bilibili.com
+search.bilibili.com##.bili-footer
+
+! 2025年8月12日 https://www.google.com
+www.google.com##.YNk70c.TrMVnc.f6F9Be
+
+! 2025年8月12日 https://onedrive.live.com
+onedrive.live.com##.bannerGleam_4aa99544.storageUpsellBanner_4aa99544
